@@ -1,0 +1,98 @@
+# Requirements
+1. Configure/Setup Apache
+2. Install/Start Apache
+3. Configure Apache to serve web content from all home directories
+4. Create "Hello World" page for 2 users
+5. Startup Apache at boot
+6. Configure Apache to run on port 8080
+7. Run Apache not as root, but as a different user.
+8. Start the HTTPD parent process as another user (not root) on port 80
+
+#Sources
+# http://www.tecmint.com/apache-interview-questions/
+# http://www.liquidweb.com/kb/how-to-install-apache-on-centos-7/
+
+
+1. Configure / Setup Apache
+# First, clean-up yum:
+$ sudo yum clean all
+# As a matter of best practice we’ll update our packages:
+$ sudo yum -y update
+# Installing Apache is as simple as running just one command:
+$ sudo yum -y install httpd
+
+
+2. Install / Start Apache
+# Allow the default HTTP and HTTPS port, ports 80 and 443, through firewalld:
+
+$ sudo firewall-cmd --permanent --add-port=80/tcp
+
+$ sudo firewall-cmd --permanent --add-port=443/tcp
+
+# And reload the firewall:
+
+$ sudo firewall-cmd --reload
+# Start Apache
+$ systemctl start httpd
+
+3. Configure Apache to serve web content from all home directories
+# I am also hosting multile sites from /var/www/html/site*
+# Site 1 and Site 2 are both hosting web content, the files are located in /var/www/html site1 site 2 folders
+
+I think I have done it correctly now
+inside the /etc/httpd/conf.d you have to edit the userdir.conf
+  # To enable requests to /~user/ to serve the user's public_html
+  # directory, remove the "UserDir disabled" line above, and uncomment
+  # the following line instead:
+  #UserDir public_html
+#Permissions Source http://www.tuxradar.com/answers/457
+
+
+4. Create "Hello World" page for 2 users
+# Create the index.html file in 
+$ /var/www/html/
+
+5. Startup Apache at boot  
+$ sudo systemctl enable httpd
+
+6. Configure Apache to run on port 8080
+  In the /etc/httpd/conf/httpd.conf change the Listen directive to 8080
+  Listen 8080
+
+
+7. Run Apache not as root, but as a different user.
+  # User/Group: The name (or #number) of the user/group to run httpd as.
+  # It is usually good practice to create a dedicated user and group for
+  # running httpd, as with most system services.
+
+  User rome
+  Group rome
+
+8. Start the HTTPD parent process as another user (not root) on port 80
+  Instructions @ Link you will also have to change the permission on the HTTPD logs or move the logs. I moved 
+  mine to the /tmp/access_error location.
+  https://wiki.apache.org/httpd/NonRootPortBinding
+  
+
+************************************************* Bonus Commands ************************************************
+
+
+# To check the status of Apache:
+
+$ sudo systemctl status httpd
+
+# To stop Apache:
+
+$ sudo systemctl stop httpd
+
+
+#Apache Config File
+$ /etc/httpd/conf/httpd.conf 
+
+
+# Add a user to a group
+$ usermod -a -G <groupname> username
+
+#Removing user apache from group web
+# gpasswd -d user group
+$ gpasswd -d apache web
