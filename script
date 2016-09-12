@@ -47,4 +47,7 @@ sudo systemctl start httpd
 # Be sure that Apache starts at boot:
 
 echo "Set HTTPD to start on boot"
+
 sudo systemctl enable httpd
+
+echo "The HTTPD Daemon is now active"
