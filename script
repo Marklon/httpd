@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -xev 
+
 # Step 1: Install Apache
 # First, clean-up yum:
 
@@ -51,3 +52,4 @@ echo "Set HTTPD to start on boot"
 sudo systemctl enable httpd
 
 echo "The HTTPD Daemon is now active"
+exit 0
