@@ -1,5 +1,16 @@
 #!/bin/bash -xev 
 
+#########################################################################################################
+#
+# Name httpd.sh
+#
+# Script to auto install the apache web service, confuration of users must be done manually @ this time
+# Author: Mark B.
+# December 3 2016
+#########################################################################################################
+
+
+
 # Step 1: Install Apache
 # First, clean-up yum:
 
